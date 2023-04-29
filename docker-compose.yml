@@ -1,0 +1,79 @@
+version: '3'
+services:
+  caddy:
+    image: caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /home/ubuntu/caddy/site:/srv
+      - /home/ubuntu/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - /home/ubuntu/caddy/data:/data
+      - /home/ubuntu/caddy/config:/config
+    restart: unless-stopped
+    environment:
+      - TZ="Asia/Shanghai"
+      - ACME_AGREE="true"
+    networks:
+      - my-network
+  
+  aria2:
+    image: p3terx/aria2-pro
+    ports:
+      - "6800:6800"
+      - "6888:6888"
+      - "6888:6888/udp"
+    volumes:
+      - /home/ubuntu/aria2/config:/config
+      - /home/ubuntu/aria2/downloads:/downloads
+      - /home/ubuntu/aria2/aria2.log:/aria2.log
+    restart: unless-stopped
+    environment:
+      - TZ="Asia/Shanghai"
+      - RPC_SECRET="qol0MSvM1J"
+      - PUID="1000"
+      - PGID="1000"
+    logging:
+      options:
+        max-size: "1m"
+    networks:
+      - my-network
+
+  cloudreve:
+    image: xavierniu/cloudreve
+    ports:
+      - "5212:5212"
+    volumes:
+      - /home/ubuntu/cloudreve/uploads:/cloudreve/uploads
+      - /home/ubuntu/cloudreve/config:/cloudreve/config
+      - /home/ubuntu/cloudreve/db:/cloudreve/db
+      - /home/ubuntu/cloudreve/avatar:/cloudreve/avatar
+      - /home/ubuntu/aria2/downloads:/downloads
+    restart: unless-stopped
+    environment:
+      - TZ="Asia/Shanghai"
+      - PUID="1000"
+      - PGID="1000"
+    networks:
+      - my-network
+
+  shadowsocks:
+    image: shadowsocks/shadowsocks-libev:latest
+    ports:
+      - "8080:8388"
+      - "8080:8388/udp"
+    volumes:
+      - /home/ubuntu/cloudreve/uploads:/cloudreve/uploads
+      - /home/ubuntu/cloudreve/config:/cloudreve/config
+      - /home/ubuntu/cloudreve/db:/cloudreve/db
+      - /home/ubuntu/cloudreve/avatar:/cloudreve/avatar
+      - /home/ubuntu/aria2/downloads:/downloads
+    restart: unless-stopped
+    environment:
+      - PASSWORD="U6un_#22~Z"
+      - METHOD="xchacha20-ietf-poly1305"
+    networks:
+      - my-network
+
+networks:
+  my-network

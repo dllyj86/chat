@@ -1,5 +1,5 @@
 # ChatGPT提问的要点
-原视频的网址: https://learn.deeplearning.ai/chatgpt-prompt-eng/lesson/2/guidelines  
+原视频并且带练习功能的网址: https://learn.deeplearning.ai/chatgpt-prompt-eng/lesson/2/guidelines  
 带中文翻译的视频的网址: https://cloudreve.jimmylab.cn/video?p=%2Fchatgpt%202.mp4&id=w6iG
 
 # 在给出问题的时候要明确和具体

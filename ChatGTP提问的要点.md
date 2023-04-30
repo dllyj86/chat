@@ -1,3 +1,7 @@
+# ChatGPT提问的要点
+原视频的网址: https://learn.deeplearning.ai/chatgpt-prompt-eng/lesson/2/guidelines
+带中文翻译的视频的网址: https://cloudreve.jimmylab.cn/video?p=%2Fchatgpt%202.mp4&id=w6iG
+
 # 在给出问题的时候要明确和具体
 可以像给刚毕业的大学生布置任务一样, 可以列出具体,明确的步骤.更长更清晰的问题和上下文,可以让模型更好的理解并输出想要的结果
 1. **可以使用分隔符,告诉模型,哪些是对它的要求,哪些是材料**  

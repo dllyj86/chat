@@ -3,10 +3,10 @@
  */
 
 import fs from 'fs-extra';
-import logger from 'jet-logger';
+import logger, { LoggerModes } from 'jet-logger';
 import childProcess from 'child_process';
 
-
+logger.settings.mode = LoggerModes.Console;
 /**
  * Start
  */

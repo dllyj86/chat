@@ -5,7 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
   mode: 'development',
   devtool: 'nosources-source-map',
-  entry: './client/index.tsx',
+  entry: path.resolve(__dirname, 'client/src/index.tsx'),
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist/public/client'),
@@ -30,11 +30,22 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    // new HtmlWebpackPlugin({
-    //   template: 'server/src/views/index.html',
-    // }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'server/src/views/index.html'),
+    }),
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist', 'public', 'client'),
+    },
+    compress: false,
+    port: 3001,
+    proxy: {
+      '/api': 'http://localhost:3000',
+    },
+    historyApiFallback: true,
+  }
 };

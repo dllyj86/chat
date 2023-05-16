@@ -68,16 +68,30 @@ app.use((
 // ** Front-End Content ** //
 
 // Set views directory (html)
-const viewsDir = path.join(__dirname, 'views');
+// const viewsDir = path.join(__dirname, 'views');
 // app.set('views', viewsDir);
 
 // Set static directory (js and css).
-const staticDir = path.join(__dirname, 'public');
+
+console.log(process.cwd());
+console.log(__dirname);
+
+/**
+ * 因为server.ts文件不是在项目的根目录.在开发模式和production模式时,执行的时候,路径不一样.
+ * 所以这里不可以使用__dirname,而是使用process.cwd()来获取项目的根目录.
+ * 通过根目录指定静态文件的路径.
+ *  */ 
+const staticDir = path.join(process.cwd(), 'dist/public/client');
 app.use(express.static(staticDir));
 
 // Route handler to serve the index.html file
 app.get('/', (req: Request, res: Response) => {
-  res.sendFile('index.html', { root: viewsDir });
+  
+  res.sendFile('index.html', { root: staticDir});
+});
+
+app.get('/api', (req, res) => {
+  res.send('Hello from Express!').end();
 });
 
 // Nav to users pg by default
@@ -86,9 +100,9 @@ app.get('/', (req: Request, res: Response) => {
 // });
 
 // Redirect to login if not logged in.
-app.get('/users', (_: Request, res: Response) => {
-  return res.sendFile('users.html', { root: viewsDir });
-});
+// app.get('/users', (_: Request, res: Response) => {
+//   return res.sendFile('users.html', { root: viewsDir });
+// });
 
 
 // **** Export default **** //
